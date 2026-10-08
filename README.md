@@ -9,6 +9,20 @@ A Windows desktop application for downloading YouTube audio as MP3, with multipl
 \*\*Multiple links. One queue. Up to five concurrent downloads.\*\*
 
 
+## Application Screenshots
+
+### Home — Multiple-Link Batch Downloads
+
+Paste multiple YouTube links, configure MP3 quality and concurrent downloads, and manage everything from one queue.
+
+![YouTube MP3 Downloader Home](Screenshots/Home.png)
+
+### Downloads — Queue and Built-in MP3 Player
+
+Track completed downloads, manage individual items, and play downloaded MP3 files directly in the application.
+
+![YouTube MP3 Downloader Downloads](Screenshots/Downloads.png)
+
 
 \## Features
 
