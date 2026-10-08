@@ -23,6 +23,12 @@ Track completed downloads, manage individual items, and play downloaded MP3 file
 
 ![YouTube MP3 Downloader Downloads](Screenshots/Downloads.png)
 
+### Dark Theme — Modern Dark Interface
+
+Switch between light and dark themes while managing multiple downloads, MP3 quality, and your download queue.
+
+![YouTube MP3 Downloader Dark Theme](Screenshots/DarkTheme.png)
+
 
 \## Features
 
