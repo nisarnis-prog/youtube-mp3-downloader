@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+    <AssemblyName>YouTube MP3 Downloader</AssemblyName>
+    <RootNamespace>YouTube_MP3_Downloader</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="Tools\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\AppIcon.ico" />
+    <Resource Include="Assets\AppIcon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="NativeHost\**" />
+    <Page Remove="NativeHost\**" />
+    <Content Remove="NativeHost\**" />
+    <Resource Remove="NativeHost\**" />
+  </ItemGroup>
+
+</Project>

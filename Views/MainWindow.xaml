@@ -1,0 +1,537 @@
+<Window x:Class="YouTube_MP3_Downloader.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:YouTube_MP3_Downloader.Views"
+        Title="YouTube MP3 Downloader"
+        Icon="pack://application:,,,/Assets/AppIcon.ico"
+        Width="1240"
+        Height="820"
+        MinWidth="1000"
+        MinHeight="640"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBack}"
+        Foreground="{DynamicResource TextPrimary}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ============ Header ============ -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource HeaderBack}"
+                BorderBrush="{DynamicResource CardBorder}"
+                BorderThickness="0,0,0,1"
+                Padding="20,12">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <Border Width="36" Height="36" CornerRadius="9" Background="{DynamicResource AccentRed}">
+                        <TextBlock Text="YT"
+                                   FontSize="14"
+                                   FontWeight="Bold"
+                                   Foreground="{DynamicResource TextOnAccent}"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="YouTube MP3 Downloader" FontSize="18" FontWeight="Bold"/>
+                        <TextBlock Text="Paste multiple YouTube links and download them as MP3 files."
+                                   FontSize="12"
+                                   Foreground="{DynamicResource TextSecondary}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding ThemeName, Mode=OneWay}"
+                               FontSize="12"
+                               Foreground="{DynamicResource TextSecondary}"
+                               Margin="0,0,10,0"/>
+                    <ToggleButton IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
+                                  Style="{StaticResource ThemeToggle}"
+                                  ToolTip="Toggle between dark and light theme"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- ============ Body ============ -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="190"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Sidebar -->
+            <Border Grid.Column="0"
+                    Background="{DynamicResource SidebarBack}"
+                    BorderBrush="{DynamicResource CardBorder}"
+                    BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <ListBox DockPanel.Dock="Top"
+                             Style="{StaticResource NavListBox}"
+                             ItemsSource="{Binding NavItems}"
+                             SelectedIndex="{Binding CurrentPageIndex, Mode=TwoWay}"/>
+                    <TextBlock DockPanel.Dock="Bottom"
+                               Text="v1.0"
+                               FontSize="11"
+                               Foreground="{DynamicResource TextFaint}"
+                               Margin="18,0,0,14"/>
+                </DockPanel>
+            </Border>
+
+            <!-- Content -->
+            <Grid Grid.Column="1" Margin="20">
+
+                <!-- ========== HOME ========== -->
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentPageIndex}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                        <!-- Bulk link input -->
+                        <Border Grid.Row="0" Style="{StaticResource Card}" Margin="0,0,0,14">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+                                    <Border Style="{StaticResource RedDot}"/>
+                                    <TextBlock Style="{StaticResource CardTitle}" Text="Paste YouTube Links — one link per line"/>
+                                </StackPanel>
+
+                                <TextBox Grid.Row="1"
+                                         Text="{Binding BulkInput, UpdateSourceTrigger=PropertyChanged}"
+                                         AcceptsReturn="True"
+                                         TextWrapping="Wrap"
+                                         VerticalScrollBarVisibility="Auto"
+                                         Height="64"
+                                         VerticalContentAlignment="Top"
+                                         ToolTip="Paste one YouTube link per line, then press Add to Queue."/>
+
+                                <Grid Grid.Row="2" Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                        <Button Content="Add to Queue"
+                                                Command="{Binding AddUrlsCommand}"
+                                                Style="{StaticResource PrimaryButton}"
+                                                Margin="0,0,8,0"/>
+                                        <Button Content="Clear Input"
+                                                Command="{Binding ClearInputCommand}"
+                                                Style="{StaticResource SecondaryButton}"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding StatusMessage, Mode=OneWay}"
+                                               Foreground="{DynamicResource TextSecondary}"
+                                               TextTrimming="CharacterEllipsis"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Right"
+                                               MaxWidth="520"/>
+                                </Grid>
+                            </Grid>
+                        </Border>
+
+                        <!-- Queue control panel -->
+                        <Border Grid.Row="1" Style="{StaticResource Card}" Margin="0,0,0,14">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,12">
+                                    <Border Style="{StaticResource RedDot}"/>
+                                    <TextBlock Style="{StaticResource CardTitle}" Text="Controls &amp; Settings"/>
+                                </StackPanel>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Margin="0,0,28,0">
+                                        <TextBlock Style="{StaticResource FormLabel}" Text="Maximum simultaneous downloads" Margin="0,0,0,6"/>
+                                        <ComboBox Width="64"
+                                                  ItemsSource="{Binding ConcurrencyOptions}"
+                                                  SelectedItem="{Binding MaxConcurrent, Mode=TwoWay}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Margin="0,0,28,0">
+                                        <TextBlock Style="{StaticResource FormLabel}" Text="MP3 quality" Margin="0,0,0,6"/>
+                                        <ComboBox Width="116"
+                                                  ItemsSource="{Binding BitrateOptions}"
+                                                  DisplayMemberPath="Label"
+                                                  SelectedItem="{Binding SelectedMp3Option, Mode=TwoWay}"/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Style="{StaticResource FormLabel}" Text="Output folder" Margin="0,0,0,6"/>
+                                        <DockPanel>
+                                            <Button DockPanel.Dock="Right"
+                                                    Content="Open Folder"
+                                                    Command="{Binding OpenFolderCommand}"
+                                                    Style="{StaticResource SecondaryButton}"
+                                                    Margin="6,0,0,0"/>
+                                            <Button DockPanel.Dock="Right"
+                                                    Content="Browse"
+                                                    Command="{Binding BrowseFolderCommand}"
+                                                    Style="{StaticResource SecondaryButton}"/>
+                                            <TextBox Height="34"
+                                                     VerticalAlignment="Center"
+                                                     Text="{Binding OutputFolder, Mode=OneWay}"
+                                                     IsReadOnly="True"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </Grid>
+
+                                <WrapPanel Grid.Row="2" Margin="0,16,0,0">
+                                    <Button Content="Start Downloads"
+                                            Command="{Binding StartQueueCommand}"
+                                            Style="{StaticResource PrimaryButton}"
+                                            Margin="0,0,8,4"/>
+                                    <Button Content="Pause Queue"
+                                            Command="{Binding PauseQueueCommand}"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Margin="0,0,8,4"/>
+                                    <Button Content="Resume Queue"
+                                            Command="{Binding ResumeQueueCommand}"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Margin="0,0,8,4"/>
+                                    <Button Content="Cancel All"
+                                            Command="{Binding CancelAllCommand}"
+                                            Style="{StaticResource DangerButton}"
+                                            Margin="0,0,8,4"/>
+                                    <Button Content="Clear Completed"
+                                            Command="{Binding ClearCompletedCommand}"
+                                            Style="{StaticResource SecondaryButton}"
+                                            Margin="0,0,0,4"/>
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+
+                        <!-- Queue table -->
+                        <Border Grid.Row="2" Style="{StaticResource Card}" Padding="0" MinHeight="220">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal" Margin="16,14,16,10">
+                                    <Border Style="{StaticResource RedDot}"/>
+                                    <TextBlock Style="{StaticResource CardTitle}" Text="Download Queue"/>
+                                    <TextBlock Text="{Binding Items.Count, Mode=OneWay, StringFormat=' — {0} items'}"
+                                               Foreground="{DynamicResource TextFaint}"
+                                               FontSize="12"
+                                               Margin="6,0,0,0"/>
+                                </StackPanel>
+                                <Border Grid.Row="1" MaxHeight="520" Margin="0,0,16,16">
+                                    <views:QueueDataGridView/>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <!-- Now Playing (shared player; also shown on Downloads) -->
+                        <views:PlaybackControlView Grid.Row="3" Margin="0,14,0,0"/>
+                            </Grid>
+                    </ScrollViewer>
+                </ContentControl>
+
+                <!-- ========== DOWNLOADS ========== -->
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentPageIndex}" Value="1">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                            <Border Style="{StaticResource RedDot}"/>
+                            <TextBlock Style="{StaticResource CardTitle}" Text="Downloads"/>
+                            <TextBlock Text="{Binding Items.Count, Mode=OneWay, StringFormat=' — {0} items'}"
+                                       Foreground="{DynamicResource TextFaint}"
+                                       FontSize="12"
+                                       Margin="6,0,0,0"/>
+                        </StackPanel>
+                        <Border Grid.Row="1" Style="{StaticResource Card}" Padding="0">
+                            <views:QueueDataGridView Margin="0,0,0,0"/>
+                        </Border>
+
+                        <!-- Now Playing (shared player; same instance/state as Home) -->
+                        <views:PlaybackControlView Grid.Row="2" Margin="0,14,0,0"/>
+                    </Grid>
+                </ContentControl>
+
+                <!-- ========== SETTINGS ========== -->
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentPageIndex}" Value="2">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                <Border Style="{StaticResource RedDot}"/>
+                                <TextBlock Style="{StaticResource CardTitle}" Text="Settings"/>
+                            </StackPanel>
+
+                            <Border Style="{StaticResource Card}" Margin="0,0,0,14">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <Border Style="{StaticResource RedDot}"/>
+                                        <TextBlock Style="{StaticResource CardTitle}" Text="Download Settings"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Margin="0,0,28,0">
+                                            <TextBlock Style="{StaticResource FormLabel}" Text="Maximum simultaneous downloads" Margin="0,0,0,6"/>
+                                            <ComboBox Width="64"
+                                                      ItemsSource="{Binding ConcurrencyOptions}"
+                                                      SelectedItem="{Binding MaxConcurrent, Mode=TwoWay}"/>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Style="{StaticResource FormLabel}" Text="MP3 quality" Margin="0,0,0,6"/>
+                                            <ComboBox Width="116"
+                                                      ItemsSource="{Binding BitrateOptions}"
+                                                      DisplayMemberPath="Label"
+                                                      SelectedItem="{Binding SelectedMp3Option, Mode=TwoWay}"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Margin="0,14,0,0">
+                                        <CheckBox Style="{StaticResource ThemeCheckBox}"
+                                                  Content="Use authentication for restricted videos"
+                                                  IsChecked="{Binding UseBrowserCookies, Mode=TwoWay}"
+                                                  ToolTip="Allow signed-in browser cookies or a cookies.txt file when YouTube requests authentication"/>
+                                        <TextBlock Style="{StaticResource FormLabel}"
+                                                   Text="Authentication method"
+                                                   Margin="0,10,0,6"/>
+                                        <ComboBox Width="150"
+                                                  HorizontalAlignment="Left"
+                                                  ItemsSource="{Binding CookieMethodOptions}"
+                                                  DisplayMemberPath="Name"
+                                                  SelectedItem="{Binding SelectedCookieMethod, Mode=TwoWay}"
+                                                  IsEnabled="{Binding UseBrowserCookies, Mode=OneWay}"
+                                                  ToolTip="Use signed-in cookies from an installed browser, or a manually exported cookies.txt file"/>
+                                        <StackPanel Margin="0,10,0,0">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCookieFileMode}" Value="True">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock Style="{StaticResource FormLabel}"
+                                                       Text="Browser source"
+                                                       Margin="0,0,0,6"/>
+                                            <ComboBox Width="150"
+                                                      HorizontalAlignment="Left"
+                                                      ItemsSource="{Binding CookieBrowserOptions}"
+                                                      DisplayMemberPath="Name"
+                                                      SelectedItem="{Binding SelectedCookieBrowser, Mode=TwoWay}"
+                                                      IsEnabled="{Binding UseBrowserCookies, Mode=OneWay}"
+                                                      ToolTip="The installed browser whose cookies yt-dlp will use"/>
+                                        </StackPanel>
+                                        <StackPanel Margin="0,10,0,0">
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsCookieFileMode}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                            <TextBlock Style="{StaticResource FormLabel}"
+                                                       Text="Cookies file"
+                                                       Margin="0,0,0,6"/>
+                                            <DockPanel>
+                                                <Button DockPanel.Dock="Right"
+                                                        Content="Browse"
+                                                        Command="{Binding BrowseCookieFileCommand}"
+                                                        Style="{StaticResource SecondaryButton}"
+                                                        IsEnabled="{Binding UseBrowserCookies, Mode=OneWay}"
+                                                        Margin="6,0,0,0"/>
+                                                <TextBox Height="34"
+                                                         IsReadOnly="True"
+                                                         Text="{Binding CookieFilePath, Mode=OneWay}"
+                                                         IsEnabled="{Binding UseBrowserCookies, Mode=OneWay}"
+                                                         ToolTip="Full path to an exported Netscape-format cookies.txt. It is only passed to yt-dlp; never copied, read, or uploaded."/>
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}" Margin="0,0,0,14">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <Border Style="{StaticResource RedDot}"/>
+                                        <TextBlock Style="{StaticResource CardTitle}" Text="Output Folder"/>
+                                    </StackPanel>
+                                    <TextBlock Style="{StaticResource FormLabel}" Text="Destination folder for completed MP3 files" Margin="0,0,0,6"/>
+                                    <DockPanel>
+                                        <Button DockPanel.Dock="Right"
+                                                Content="Open Folder"
+                                                Command="{Binding OpenFolderCommand}"
+                                                Style="{StaticResource SecondaryButton}"
+                                                Margin="6,0,0,0"/>
+                                        <Button DockPanel.Dock="Right"
+                                                Content="Browse"
+                                                Command="{Binding BrowseFolderCommand}"
+                                                Style="{StaticResource SecondaryButton}"/>
+                                        <TextBox Height="34"
+                                                 VerticalAlignment="Center"
+                                                 Text="{Binding OutputFolder, Mode=OneWay}"
+                                                 IsReadOnly="True"/>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                        <Border Style="{StaticResource RedDot}"/>
+                                        <TextBlock Style="{StaticResource CardTitle}" Text="Appearance"/>
+                                    </StackPanel>
+                                    <DockPanel>
+                                        <ToggleButton DockPanel.Dock="Right"
+                                                      IsChecked="{Binding IsDarkTheme, Mode=TwoWay}"
+                                                      Style="{StaticResource ThemeToggle}"
+                                                      ToolTip="Toggle between dark and light theme"/>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding ThemeName, Mode=OneWay}" FontSize="13" FontWeight="SemiBold" Margin="0,0,0,3"/>
+                                            <TextBlock Text="Switch between dark and light themes from the header toggle as well."
+                                                       FontSize="12"
+                                                       Foreground="{DynamicResource TextSecondary}"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </ContentControl>
+
+                <!-- ========== ABOUT ========== -->
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding CurrentPageIndex}" Value="3">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                                <Border Style="{StaticResource RedDot}"/>
+                                <TextBlock Style="{StaticResource CardTitle}" Text="About"/>
+                            </StackPanel>
+
+                            <Border Style="{StaticResource Card}">
+                                <StackPanel>
+                                    <TextBlock FontSize="24" FontWeight="Bold" Text="YouTube MP3 Downloader"/>
+                                    <TextBlock Text="Built by Nisar" FontSize="14" Foreground="{DynamicResource TextSecondary}" Margin="0,4,0,0"/>
+                                    <TextBlock Text="Version 1.0" FontSize="12.5" Foreground="{DynamicResource TextFaint}" Margin="0,2,0,18"/>
+
+                                    <TextBlock TextWrapping="Wrap" Text="A local Windows desktop application for managing multiple audio download jobs and converting supported media to MP3." Margin="0,0,0,16"/>
+
+                                    <Border Background="{DynamicResource SidebarSelectedBack}"
+                                            CornerRadius="8"
+                                            Padding="12,10"
+                                            Margin="0,0,0,16">
+                                        <TextBlock TextWrapping="Wrap"
+                                                   Text="This application is intended only for downloading content that the user owns or is authorized to download."/>
+                                    </Border>
+
+                                    <TextBlock Text="© 2026 Nisar. All rights reserved."
+                                               FontSize="12"
+                                               Foreground="{DynamicResource TextFaint}"/>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </ContentControl>
+            </Grid>
+        </Grid>
+
+        <!-- ============ Footer / status bar ============ -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource FooterBack}"
+                BorderBrush="{DynamicResource CardBorder}"
+                BorderThickness="0,1,0,0"
+                Padding="20,7">
+            <DockPanel>
+                <TextBlock DockPanel.Dock="Left"
+                           Text="Built by Nisar"
+                           FontSize="11"
+                           Foreground="{DynamicResource TextSecondary}"/>
+                <TextBlock DockPanel.Dock="Right"
+                           Text="For personal and authorized use only. © 2026 Nisar. All rights reserved."
+                           FontSize="11"
+                           Foreground="{DynamicResource TextFaint}"/>
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock FontSize="11.5" Margin="0,0,20,0">
+                        <Run Text="Active: "/><Run Text="{Binding ActiveCount, Mode=OneWay}" FontWeight="SemiBold"/>
+                    </TextBlock>
+                    <TextBlock FontSize="11.5" Margin="0,0,20,0">
+                        <Run Text="Waiting: "/><Run Text="{Binding WaitingCount, Mode=OneWay}" FontWeight="SemiBold"/>
+                    </TextBlock>
+                    <TextBlock FontSize="11.5" Margin="0,0,20,0">
+                        <Run Text="Completed: "/><Run Text="{Binding CompletedCount, Mode=OneWay}" FontWeight="SemiBold" Foreground="{DynamicResource StatusCompleted}"/>
+                    </TextBlock>
+                    <TextBlock FontSize="11.5" Margin="0,0,20,0">
+                        <Run Text="Failed: "/><Run Text="{Binding FailedCount, Mode=OneWay}" FontWeight="SemiBold" Foreground="{DynamicResource StatusFailed}"/>
+                    </TextBlock>
+                    <ProgressBar Width="90" Minimum="0" Maximum="100" Value="{Binding TotalProgress, Mode=OneWay}"/>
+                    <TextBlock FontSize="11.5"
+                               Margin="8,0,0,0"
+                               Text="{Binding TotalProgress, Mode=OneWay, StringFormat={}{0:0}%}"
+                               Foreground="{DynamicResource TextSecondary}"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>

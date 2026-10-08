@@ -1,0 +1,49 @@
+﻿# .NET / Visual Studio
+bin/
+obj/
+.vs/
+.vscode/
+TestResults/
+*.user
+*.suo
+
+# Published application
+publish/
+artifacts/
+
+# Logs
+Logs/
+*.log
+
+# Generated installer files
+Installer/Output/
+Installer/Build/
+
+# Third-party downloaded binaries
+Tools/*.exe
+Tools/*.zip
+Tools/*.7z
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.cache
+
+# Sensitive files
+.env
+.env.*
+!.env.example
+secrets.json
+*.pfx
+*.p12
+*.key
+
+# Windows
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Chrome extension signing keys and development tests
+StableIdTest/
+*.pem

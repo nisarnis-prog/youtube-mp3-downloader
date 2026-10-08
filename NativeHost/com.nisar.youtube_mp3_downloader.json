@@ -1,0 +1,9 @@
+{
+  "name": "com.nisar.youtube_mp3_downloader",
+  "description": "Native messaging host for Nisar MP3 Downloader Companion",
+  "path": "<ABSOLUTE_PATH_TO_YouTubeMp3NativeHost.exe>",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://degdafbfgoodjcnhbnialnbdfahlfoce/"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Nisar MP3 Downloader Companion",
+  "version": "1.0.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuHsUVE2Dh6qxnE0WJpRvMrewHRmuqDQCgHIlphp+lL3NXo0LfZBb1RtD3KxQsAB5lMQftChnIc2JP/FWIJ8lPgxrFJ9rS8D3+mT5Qrzoct0hQbq98Al4Mu/G+ckUvY5K2kYKjYvejVk0fnVSlXupu7i8uElzOCTLwuzMhSrDLcERTbJIg4GmEbe1kOz1+Q0wicoyoYg5+xP4vjqWfcStpBn/a/8sMiw883Wmqi6AE7XUEzkpZi5+ixFd6auPVdI6ViaXa94vgE4Rw4e4PSjY6CbdbCj2B+nyvoNmwp5RN1bWJeHhxaHRrZPzz5K8KwaS05jXAnIAO+cx5Un+i8e8GQIDAQAB",
+  "description": "Send supported YouTube links to the local YouTube MP3 Downloader.",
+  "permissions": [
+    "activeTab",
+    "nativeMessaging"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Nisar MP3 Downloader Companion",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
