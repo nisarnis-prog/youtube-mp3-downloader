@@ -1,32 +1,41 @@
 ﻿# Third-Party Software Notices
 
-YouTube MP3 Downloader uses third-party software distributed
+YouTube MP3 Downloader contains third-party software distributed
 under licenses separate from the MIT License covering the
 application's original source code.
 
 ## FFmpeg and ffprobe
 
-Distributor: https://www.gyan.dev/ffmpeg/builds/
-Version: 2026-09-02-git-9fc8c785e2-full_build
-License: GNU General Public License version 3 or later
+Build provider: BtbN FFmpeg-Builds
+Build date: 2026-10-08
+Package: ffmpeg-master-latest-win64-lgpl.zip
+Platform: Windows x64
+Variant: LGPL static build
+FFmpeg version: N-127252-ga25ba44c0c-20261008
+FFmpeg source revision: a25ba44c0c
 
-FFmpeg source revision:
-https://github.com/FFmpeg/FFmpeg/commit/9fc8c785e2
+Build repository:
+https://github.com/BtbN/FFmpeg-Builds
 
-Original distribution documentation:
-- ThirdPartyLicenses/FFmpeg/LICENSE
-- ThirdPartyLicenses/FFmpeg/README.txt
+Build release:
+https://github.com/BtbN/FFmpeg-Builds/releases/tag/latest
 
-FFmpeg and ffprobe are separate executable programs invoked
-by YouTube MP3 Downloader.
+FFmpeg source:
+https://github.com/FFmpeg/FFmpeg
 
-The full FFmpeg build contains additional third-party libraries.
-The FFmpeg source revision alone may not constitute the complete
-corresponding source for the distributed binaries.
+The supplied executables report GNU LGPL version 3 or later.
+See ThirdPartyLicenses/FFmpeg/LGPL-3.0.txt and
+ThirdPartyLicenses/GPL-3.0.txt.
 
-Before public binary distribution, the corresponding-source
-requirements for this build and its included libraries must
-be satisfied.
+The executables contain statically linked third-party libraries.
+Their applicable licenses and corresponding-source obligations
+must be satisfied before binary redistribution.
+
+The BtbN build-script repository and FFmpeg source revision alone
+are not asserted to constitute the complete corresponding source.
+
+FFmpeg and ffprobe are separate executables invoked by the
+application.
 
 ## yt-dlp
 
@@ -34,11 +43,11 @@ Version: 2026.08.19
 Project: https://github.com/yt-dlp/yt-dlp
 
 The main yt-dlp project is released under the Unlicense.
-The standalone executable may contain additional dependencies
-subject to their own licenses.
+The standalone executable contains additional dependencies
+subject to their respective licenses.
 
-The bundled executable's applicable license notices and
-redistribution requirements must be reviewed before release.
+See ThirdPartyLicenses/yt-dlp/ for the bundled license notices.
+Redistribution requirements remain subject to final review.
 
 ## Application License
 
