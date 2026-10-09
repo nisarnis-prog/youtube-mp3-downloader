@@ -33,3 +33,24 @@ The build scripts and upstream FFmpeg repository alone are not
 claimed to provide the complete corresponding source.
 
 Only ffmpeg.exe and ffprobe.exe are used by this application.
+
+Corresponding-source retrieval information:
+
+BtbN build-script revision:
+9acad4a9ef1583096af7836cc1e9c8cbcb4d3950
+
+FFmpeg source revision:
+a25ba44c0c
+
+GitHub Actions build run:
+https://github.com/BtbN/FFmpeg-Builds/actions/runs/37775727143
+
+The build run included a download-cache artifact (2.06 GB)
+containing dependency source downloads.
+
+The build scripts at the pinned revision document dependency
+retrieval, versions, and build procedures.
+
+Note: GitHub Actions artifacts may expire. These references
+document source provenance but do not independently establish
+that all redistribution and LGPL requirements are satisfied.
