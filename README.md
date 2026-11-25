@@ -1,3 +1,8 @@
+<picture>
+  <source media="(max-width: 640px)" srcset="Assets/portfolio/hero-mobile.svg" />
+  <img src="Assets/portfolio/hero.svg" width="1200" alt="YouTube MP3 Downloader — Nisar Muhammad" />
+</picture>
+
 
 # YouTube MP3 Downloader
 
