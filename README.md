@@ -1,6 +1,6 @@
 <picture>
-  <source media="(max-width: 640px)" srcset="Assets/portfolio/hero-mobile.svg" />
-  <img src="Assets/portfolio/hero.svg" width="1200" alt="YouTube MP3 Downloader — Nisar Muhammad" />
+  <source media="(max-width: 640px)" srcset="Assets/phase2/hero-mobile.svg" />
+  <img src="Assets/phase2/hero.svg" width="1200" alt="YouTube MP3 Downloader — Nisar Muhammad" />
 </picture>
 
 
@@ -10,7 +10,7 @@ A Windows desktop application for downloading YouTube audio as MP3, with multipl
 
 **Multiple links. One queue. Up to five concurrent downloads.**
 
-## Application Screenshots
+## <img src="Assets/phase2/section.svg" width="32" alt="" /> Application Screenshots
 
 ### Home — Multiple-Link Batch Downloads
 
@@ -30,7 +30,7 @@ Switch between light and dark themes while managing multiple downloads, MP3 qual
 
 ![YouTube MP3 Downloader Dark Theme](Screenshots/DarkTheme.png)
 
-## Features
+## <img src="Assets/phase2/section.svg" width="32" alt="" /> Features
 
 - **Multiple-link downloading:** Paste several YouTube video URLs at once, one per line.
 - **Concurrent downloads:** Configure between 1 and 5 simultaneous downloads.
@@ -41,7 +41,7 @@ Switch between light and dark themes while managing multiple downloads, MP3 qual
 - **Light and dark themes:** Choose your preferred appearance.
 - **Local Windows application:** No separate cloud account is required.
 
-## Download and Install
+## <img src="Assets/phase2/section.svg" width="32" alt="" /> Download and Install
 
 Download `YouTube-MP3-Downloader-Setup-v1.0.0.exe` from the GitHub Releases page once the first release is published.
 
@@ -55,7 +55,7 @@ The installer is currently unsigned. Windows may display a SmartScreen warning. 
 
 The Chrome extension is optional. All direct downloading features are available through the desktop application.
 
-## Download Multiple YouTube Links
+## <img src="Assets/phase2/section.svg" width="32" alt="" /> Download Multiple YouTube Links
 
 1. Open YouTube MP3 Downloader.
 2. Copy one or more supported YouTube video URLs.
